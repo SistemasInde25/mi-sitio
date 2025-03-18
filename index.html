@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .ejercicio {
+            display: none;
+            margin-top: 20px;
+        }
+        .ejercicio.active {
+            display: block;
+        }
+        .imagenes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        img {
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            border-style: solid;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .checkbox-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }    
+    </style>
+</head>
+<body>
+    <h1>Ejercicios</h1>
+    <div id="contenedor"></div>
+    <script>
+        const ejercicios = [
+            { texto: "Ejercicio 1" ,descripcion: "Curl de Bíceps con Mancuernas – 3x10 - Curl Martillo – 3x10", img: ["CurlMancuerna.jpg", "Curl-Martillo.jpg"] },
+            { texto: "Ejercicio 2",descripcion: "Curl Concentrado – 3x10 - Elevaciones Frontales con Mancuernas – 3x12", img: ["Curl Concentrado.jpg","Elevación-frontal-mancuernas.jpg"] },
+            { texto: "Ejercicio 3",descripcion: "Elevaciones laterales con mancuerna – 3x12", img: ["Elevaciones-laterales-mancuernas.jpg"] }
+        ];
+
+        let indice = 0;
+        const contenedor = document.getElementById("contenedor");
+
+        function mostrarEjercicio() {
+            if (indice >= ejercicios.length) {
+                contenedor.innerHTML = "<h2>¡Has completado todos los ejercicios!</h2>";
+                return;
+            }
+            const ejercicio = ejercicios[indice];
+            contenedor.innerHTML = `
+                <div class="ejercicio active">
+                    <h2>${ejercicio.texto}</h2>
+                    <p>${ejercicio.descripcion}</p>
+                    <div class="imagenes">
+                        ${ejercicio.img.map(img => `<img src="${img}" alt="${ejercicio.texto}">`).join('')}
+                    </div>
+                    <br>
+                    <button onclick="anteriorEjercicio()">Anterior</button>
+                    <button onclick="siguienteEjercicio()">Siguiente</button>
+                    <br>
+                    <br>
+                    <br>
+                     <div class="checkbox-container">
+                        <input type="checkbox"> <input type="checkbox"> <input type="checkbox"> <input type="checkbox">
+                    </div>    
+                </div>
+            `;
+        }
+
+        function siguienteEjercicio() {
+            indice++;
+            mostrarEjercicio();
+        }
+
+        function anteriorEjercicio() {
+            indice--;
+            mostrarEjercicio();
+        }
+
+        mostrarEjercicio();
+    </script>
+</body>
+</html>
