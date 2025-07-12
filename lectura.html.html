@@ -1,0 +1,53 @@
+<!-- Este es solo el archivo base para modo lectura. Crear otro HTML para el modo edición -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Proyectos - Lectura</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tabla de Proyectos (Solo Lectura)</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>CC</th>
+        <th>Descripción</th>
+        <th>Nombre Proyecto y Desarrollo</th>
+        <th>Razón Social</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-lectura"></tbody>
+  </table>
+
+  <script>
+    const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
+    const tablaLectura = document.getElementById("tabla-lectura");
+
+    datos.forEach(fila => {
+      const tr = document.createElement("tr");
+      fila.forEach(valor => {
+        const td = document.createElement("td");
+        td.textContent = valor;
+        tr.appendChild(td);
+      });
+      tablaLectura.appendChild(tr);
+    });
+  </script>
+</body>
+</html>
