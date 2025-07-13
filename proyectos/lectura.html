@@ -26,7 +26,7 @@
       font-size: 16px;
     }
     .btn {
-      margin-top: 20px;
+      margin: 10px 0;
       padding: 10px 15px;
       font-size: 14px;
       cursor: pointer;
@@ -35,6 +35,7 @@
 </head>
 <body>
   <h1>Tabla de Proyectos (Solo Lectura)</h1>
+  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
   <input type="text" id="buscador" placeholder="Buscar...">
   <table>
     <thead>
@@ -47,8 +48,6 @@
     </thead>
     <tbody id="tabla-lectura"></tbody>
   </table>
-
-  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
 
   <script>
     const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
