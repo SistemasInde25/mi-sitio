@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tabla de Proyectos - Lectura</title>
-  
   <style>
     table {
       width: 100%;
@@ -27,7 +26,7 @@
       font-size: 16px;
     }
     .btn {
-      margin: 10px 0;
+      margin-top: 20px;
       padding: 10px 15px;
       font-size: 14px;
       cursor: pointer;
@@ -36,20 +35,7 @@
 </head>
 <body>
   <h1>Tabla de Proyectos (Solo Lectura)</h1>
-  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
   <input type="text" id="buscador" placeholder="Buscar...">
-
-function validarAcceso() {
-      const clave = prompt("Ingresa la contraseña para editar:");
-      if (clave === "1234") {
-        window.location.href = "editable.html";
-      } else {
-        alert("Contraseña incorrecta.");
-      }
-    }
-
-
-  
   <table>
     <thead>
       <tr>
@@ -61,6 +47,11 @@ function validarAcceso() {
     </thead>
     <tbody id="tabla-lectura"></tbody>
   </table>
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+  <input type="text" id="buscador" placeholder="Buscar..." style="max-width: 400px; width: 100%;">
+  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
+  </div>
 
   <script>
     const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
@@ -86,7 +77,14 @@ function validarAcceso() {
       renderTabla(filtrados);
     });
 
-    
+    function validarAcceso() {
+      const clave = prompt("Ingresa la contraseña para editar:");
+      if (clave === "1234") {
+        window.location.href = "editable.html";
+      } else {
+        alert("Contraseña incorrecta.");
+      }
+    }
 
     renderTabla(datos);
   </script>
