@@ -4,14 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tabla de Proyectos - Lectura</title>
-  function validarAcceso() {
-      const clave = prompt("Ingresa la contraseña para editar:");
-      if (clave === "1234") {
-        window.location.href = "editable.html";
-      } else {
-        alert("Contraseña incorrecta.");
-      }
-    }
+  
   <style>
     table {
       width: 100%;
@@ -45,6 +38,18 @@
   <h1>Tabla de Proyectos (Solo Lectura)</h1>
   <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
   <input type="text" id="buscador" placeholder="Buscar...">
+
+function validarAcceso() {
+      const clave = prompt("Ingresa la contraseña para editar:");
+      if (clave === "1234") {
+        window.location.href = "editable.html";
+      } else {
+        alert("Contraseña incorrecta.");
+      }
+    }
+
+
+  
   <table>
     <thead>
       <tr>
