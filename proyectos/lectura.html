@@ -25,6 +25,12 @@
       margin-top: 20px;
       font-size: 16px;
     }
+    .btn {
+      margin-top: 20px;
+      padding: 10px 15px;
+      font-size: 14px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -41,6 +47,8 @@
     </thead>
     <tbody id="tabla-lectura"></tbody>
   </table>
+
+  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
 
   <script>
     const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
@@ -66,7 +74,11 @@
       renderTabla(filtrados);
     });
 
-    renderTabla(datos);
-  </script>
-</body>
-</html>
+    function validarAcceso() {
+      const clave = prompt("Ingresa la contraseña para editar:");
+      if (clave === "1234") {
+        window.location.href = "editable.html";
+      } else {
+        alert("Contraseña incorrecta.");
+      }
+    }
