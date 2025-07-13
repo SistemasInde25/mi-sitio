@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabla de Proyectos - Lectura</title>
+  <title>Tabla de Proyectos - Editable</title>
   <style>
     table {
       width: 100%;
@@ -18,15 +18,13 @@
     th {
       background-color: #f2f2f2;
     }
-    #buscador {
-      padding: 8px;
+    input {
       width: 100%;
-      max-width: 400px;
-      margin-top: 20px;
-      font-size: 16px;
+      box-sizing: border-box;
+      padding: 4px;
     }
     .btn {
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 10px 15px;
       font-size: 14px;
       cursor: pointer;
@@ -34,8 +32,11 @@
   </style>
 </head>
 <body>
-  <h1>Tabla de Proyectos (Solo Lectura)</h1>
-  <input type="text" id="buscador" placeholder="Buscar...">
+  <h1>Tabla de Proyectos (Editable)</h1>
+  <button class="btn" onclick="agregarFila()">Agregar Fila</button>
+  <button class="btn" onclick="guardarCambios()">Guardar Cambios</button>
+  <button class="btn" onclick="irLectura()">Regresar a Lectura</button>
+
   <table>
     <thead>
       <tr>
@@ -45,44 +46,44 @@
         <th>Razón Social</th>
       </tr>
     </thead>
-    <tbody id="tabla-lectura"></tbody>
+    <tbody id="tabla-editable"></tbody>
   </table>
-  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
 
   <script>
-    const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
-    const tablaLectura = document.getElementById("tabla-lectura");
-    const buscador = document.getElementById("buscador");
+    const tablaEditable = document.getElementById("tabla-editable");
+    let datos = JSON.parse(localStorage.getItem("proyectos")) || [];
 
-    function renderTabla(filtrados) {
-      tablaLectura.innerHTML = "";
-      filtrados.forEach(fila => {
+    function renderTabla() {
+      tablaEditable.innerHTML = "";
+      datos.forEach((fila, i) => {
         const tr = document.createElement("tr");
-        fila.forEach(valor => {
+        fila.forEach((valor, j) => {
           const td = document.createElement("td");
-          td.textContent = valor;
+          const input = document.createElement("input");
+          input.value = valor;
+          input.oninput = () => datos[i][j] = input.value;
+          td.appendChild(input);
           tr.appendChild(td);
         });
-        tablaLectura.appendChild(tr);
+        tablaEditable.appendChild(tr);
       });
     }
 
-    buscador.addEventListener("input", () => {
-      const texto = buscador.value.toLowerCase();
-      const filtrados = datos.filter(fila => fila.some(celda => celda.toLowerCase().includes(texto)));
-      renderTabla(filtrados);
-    });
-
-    function validarAcceso() {
-      const clave = prompt("Ingresa la contraseña para editar:");
-      if (clave === "1234") {
-        window.location.href = "editable.html";
-      } else {
-        alert("Contraseña incorrecta.");
-      }
+    function agregarFila() {
+      datos.push(["", "", "", ""]);
+      renderTabla();
     }
 
-    renderTabla(datos);
+    function guardarCambios() {
+      localStorage.setItem("proyectos", JSON.stringify(datos));
+      alert("Cambios guardados correctamente.");
+    }
+
+    function irLectura() {
+      window.location.href = "lectura.html";
+    }
+
+    renderTabla();
   </script>
 </body>
 </html>
