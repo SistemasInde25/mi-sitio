@@ -22,20 +22,28 @@
       padding: 8px;
       width: 100%;
       max-width: 400px;
-      margin-top: 20px;
       font-size: 16px;
     }
     .btn {
-      margin-top: 20px;
       padding: 10px 15px;
       font-size: 14px;
       cursor: pointer;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <h1>Tabla de Proyectos (Solo Lectura)</h1>
-  <input type="text" id="buscador" placeholder="Buscar...">
+  <div class="top-bar">
+    <input type="text" id="buscador" placeholder="Buscar...">
+    <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
+  </div>
   <table>
     <thead>
       <tr>
@@ -47,11 +55,6 @@
     </thead>
     <tbody id="tabla-lectura"></tbody>
   </table>
-
-  <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-  <input type="text" id="buscador" placeholder="Buscar..." style="max-width: 400px; width: 100%;">
-  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
-  </div>
 
   <script>
     const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
