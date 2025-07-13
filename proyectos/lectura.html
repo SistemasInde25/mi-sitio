@@ -1,4 +1,3 @@
-<!-- Este es solo el archivo base para modo lectura. Crear otro HTML para el modo edición -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -19,10 +18,18 @@
     th {
       background-color: #f2f2f2;
     }
+    #buscador {
+      padding: 8px;
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body>
   <h1>Tabla de Proyectos (Solo Lectura)</h1>
+  <input type="text" id="buscador" placeholder="Buscar...">
   <table>
     <thead>
       <tr>
@@ -38,16 +45,28 @@
   <script>
     const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
     const tablaLectura = document.getElementById("tabla-lectura");
+    const buscador = document.getElementById("buscador");
 
-    datos.forEach(fila => {
-      const tr = document.createElement("tr");
-      fila.forEach(valor => {
-        const td = document.createElement("td");
-        td.textContent = valor;
-        tr.appendChild(td);
+    function renderTabla(filtrados) {
+      tablaLectura.innerHTML = "";
+      filtrados.forEach(fila => {
+        const tr = document.createElement("tr");
+        fila.forEach(valor => {
+          const td = document.createElement("td");
+          td.textContent = valor;
+          tr.appendChild(td);
+        });
+        tablaLectura.appendChild(tr);
       });
-      tablaLectura.appendChild(tr);
+    }
+
+    buscador.addEventListener("input", () => {
+      const texto = buscador.value.toLowerCase();
+      const filtrados = datos.filter(fila => fila.some(celda => celda.toLowerCase().includes(texto)));
+      renderTabla(filtrados);
     });
+
+    renderTabla(datos);
   </script>
 </body>
 </html>
