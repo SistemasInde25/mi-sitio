@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tabla de Proyectos - Editable</title>
+  <title>Tabla de Proyectos - Lectura</title>
   <style>
     table {
       width: 100%;
@@ -18,13 +18,15 @@
     th {
       background-color: #f2f2f2;
     }
-    input {
+    #buscador {
+      padding: 8px;
       width: 100%;
-      box-sizing: border-box;
-      padding: 4px;
+      max-width: 400px;
+      margin-top: 20px;
+      font-size: 16px;
     }
     .btn {
-      margin-top: 10px;
+      margin-top: 20px;
       padding: 10px 15px;
       font-size: 14px;
       cursor: pointer;
@@ -32,10 +34,8 @@
   </style>
 </head>
 <body>
-  <h1>Tabla de Proyectos (Editable)</h1>
-  <button class="btn" onclick="agregarFila()">Agregar Fila</button>
-  <button class="btn" onclick="guardarCambios()">Guardar Cambios</button>
-
+  <h1>Tabla de Proyectos (Solo Lectura)</h1>
+  <input type="text" id="buscador" placeholder="Buscar...">
   <table>
     <thead>
       <tr>
@@ -45,40 +45,44 @@
         <th>Razón Social</th>
       </tr>
     </thead>
-    <tbody id="tabla-editable"></tbody>
+    <tbody id="tabla-lectura"></tbody>
   </table>
+  <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
 
   <script>
-    const tablaEditable = document.getElementById("tabla-editable");
-    let datos = JSON.parse(localStorage.getItem("proyectos")) || [];
+    const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
+    const tablaLectura = document.getElementById("tabla-lectura");
+    const buscador = document.getElementById("buscador");
 
-    function renderTabla() {
-      tablaEditable.innerHTML = "";
-      datos.forEach((fila, i) => {
+    function renderTabla(filtrados) {
+      tablaLectura.innerHTML = "";
+      filtrados.forEach(fila => {
         const tr = document.createElement("tr");
-        fila.forEach((valor, j) => {
+        fila.forEach(valor => {
           const td = document.createElement("td");
-          const input = document.createElement("input");
-          input.value = valor;
-          input.oninput = () => datos[i][j] = input.value;
-          td.appendChild(input);
+          td.textContent = valor;
           tr.appendChild(td);
         });
-        tablaEditable.appendChild(tr);
+        tablaLectura.appendChild(tr);
       });
     }
 
-    function agregarFila() {
-      datos.push(["", "", "", ""]);
-      renderTabla();
+    buscador.addEventListener("input", () => {
+      const texto = buscador.value.toLowerCase();
+      const filtrados = datos.filter(fila => fila.some(celda => celda.toLowerCase().includes(texto)));
+      renderTabla(filtrados);
+    });
+
+    function validarAcceso() {
+      const clave = prompt("Ingresa la contraseña para editar:");
+      if (clave === "1234") {
+        window.location.href = "editable.html";
+      } else {
+        alert("Contraseña incorrecta.");
+      }
     }
 
-    function guardarCambios() {
-      localStorage.setItem("proyectos", JSON.stringify(datos));
-      alert("Cambios guardados correctamente.");
-    }
-
-    renderTabla();
+    renderTabla(datos);
   </script>
 </body>
 </html>
