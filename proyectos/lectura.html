@@ -41,7 +41,7 @@
 <body>
   <h1>Tabla de Proyectos (Solo Lectura)</h1>
   <div class="top-bar">
-    
+    <input type="text" id="buscador" placeholder="Buscar...">
     <button class="btn" onclick="validarAcceso()">Editar Tabla</button>
   </div>
   <table>
@@ -57,13 +57,22 @@
   </table>
 
   <script>
-    const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
     const tablaLectura = document.getElementById("tabla-lectura");
     const buscador = document.getElementById("buscador");
+
+    function cargarDatos() {
+      try {
+        const datos = JSON.parse(localStorage.getItem("proyectos")) || [];
+        return Array.isArray(datos) ? datos : [];
+      } catch (e) {
+        return [];
+      }
+    }
 
     function renderTabla(filtrados) {
       tablaLectura.innerHTML = "";
       filtrados.forEach(fila => {
+        if (!Array.isArray(fila)) return;
         const tr = document.createElement("tr");
         fila.forEach(valor => {
           const td = document.createElement("td");
@@ -76,7 +85,7 @@
 
     buscador.addEventListener("input", () => {
       const texto = buscador.value.toLowerCase();
-      const filtrados = datos.filter(fila => fila.some(celda => celda.toLowerCase().includes(texto)));
+      const filtrados = datosGlobal.filter(fila => fila.some(celda => celda.toLowerCase().includes(texto)));
       renderTabla(filtrados);
     });
 
@@ -89,7 +98,8 @@
       }
     }
 
-    renderTabla(datos);
+    const datosGlobal = cargarDatos();
+    renderTabla(datosGlobal);
   </script>
 </body>
 </html>
