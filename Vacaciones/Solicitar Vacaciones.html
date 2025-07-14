@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solicitar Vacaciones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://unpkg.com/alpinejs"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div x-data="vacacionesWizard()" class="bg-white p-6 rounded-2xl shadow-xl w-full max-w-4xl">
+    <template x-if="paso === 1">
+      <div>
+        <h2 class="text-xl font-bold mb-4">1. Selecciona el Logo de INDE</h2>
+        <img src="img/paso1.png" alt="Paso 1" class="w-full mb-6 rounded-2xl">
+        <div class="flex justify-between">
+          <div></div>
+          <button @click="siguiente" class="bg-blue-600 text-white px-4 py-2 rounded">Siguiente</button>
+        </div>
+      </div>
+    </template>
+
+    <template x-if="paso === 2">
+      <div>
+        <h2 class="text-xl font-bold mb-4">2. Selecciona la opción MÁS</h2>
+        <img src="img/paso2.png" alt="Paso 2" class="w-full mb-6 rounded-2xl">
+        <div class="flex justify-between">
+          <button @click="anterior" class="bg-gray-300 px-4 py-2 rounded">Atrás</button>
+          <button @click="siguiente" class="bg-blue-600 text-white px-4 py-2 rounded">Siguiente</button>
+        </div>
+      </div>
+    </template>
+
+    <template x-if="paso === 3">
+      <div>
+        <h2 class="text-xl font-bold mb-4">3. Selecciona Flujos de Trabajo</h2>
+        <img src="img/paso3.png" alt="Paso 3" class="w-full mb-6 rounded-2xl">
+        <div class="flex justify-between">
+          <button @click="anterior" class="bg-gray-300 px-4 py-2 rounded">Atrás</button>
+          <button @click="siguiente" class="bg-blue-600 text-white px-4 py-2 rounded">Siguiente</button>
+          </div>
+      </div>
+    </template>
+
+
+    <template x-if="paso === 4">
+      <div>
+        <h2 class="text-xl font-bold mb-4">4. Selecciona Permiso de Ausencia</h2>
+        <img src="img/paso4.png" alt="Paso 4" class="w-full mb-6 rounded-2xl">
+        <div class="flex justify-between">
+          <button @click="anterior" class="bg-gray-300 px-4 py-2 rounded">Atrás</button>
+          <button @click="siguiente" class="bg-blue-600 text-white px-4 py-2 rounded">Siguiente</button>
+          </div>
+      </div>
+    </template>
+  
+
+    <template x-if="paso === 5">
+      <div>
+        <h2 class="text-xl font-bold mb-4">5. Nos aparecera una ventana con el nombre Flujos de Trabajo, seleccionamos SIGUIENTE</h2>
+        <img src="img/paso5.png" alt="Paso 5" class="w-full mb-6 rounded-2xl">
+        <div class="flex justify-between">
+          <button @click="anterior" class="bg-gray-300 px-4 py-2 rounded">Atrás</button>
+          <button @click="siguiente" class="bg-blue-600 text-white px-4 py-2 rounded">Siguiente</button>
+          </div>
+      </div>
+    </template>
+
+
+    <template x-if="paso === 6">
+      <div>
+        <h2 class="text-xl font-bold mb-4">6. Rellenamos la información e INICIAR</h2>
+        <img src="img/paso6.png" alt="Paso 6" class="w-full mb-6 rounded-2xl">
+        <div class="flex justify-between">
+          <button @click="anterior" class="bg-gray-300 px-4 py-2 rounded">Atrás</button>
+          </div>
+      </div>
+    </template>
+
+
+  </div>
+  
+
+
+  <script>
+  function vacacionesWizard() {
+    return {
+      paso: 1,
+      siguiente() { if(this.paso < 7) this.paso++ },
+      anterior() { if(this.paso > 1) this.paso-- },
+      finalizar() { this.paso = 8 }
+    }
+  }
+  </script>
+</body>
+</html>
